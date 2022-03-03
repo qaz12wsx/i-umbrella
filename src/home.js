@@ -9,10 +9,10 @@ import u2 from './u2.png'
 
 import Header from './header';
 import Footer from './footer';
+import Lexbox from './lextest';
 
 function Home(){
     const [temp, setTemp] = useState();
-    const [address, setAddress] = useState();
     const [weather, setweather] = useState();
     const [weatherimg, setweatherimg] = useState();
     const [isload, setisload] = useState(false);
@@ -111,6 +111,7 @@ function Home(){
             <br/>
             <Button variant="contained" sx={{marginBottom:"30px"}}><Link to='/borrow' className="link">我要租傘</Link></Button>
         </div>
+        <Lexbox/>
         <Footer/>
         </div>
     )

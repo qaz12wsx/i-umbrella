@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Header from './header';
 import Footer from './footer';
-import {AuthContext, STATUS} from './AuthContext';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
@@ -24,22 +23,19 @@ export default function SignIn() {
   const handleChange = function (e) {
     setAccount({ ...account, [e.target.name]: e.target.value });
   };
-  
-  
-  const authContext = useContext(AuthContext);
+
   
   const handleSubmit = async function () {
     setMessage("");
-    authContext.setStatus(STATUS.toSignOut);
-    authContext.setLoginemail(account.username)
     
     try {
       const res = await axios.post("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetLoginInfo", account);
       
-      
       if (res) {
         if(res.data === "login success"){
           setSuccess(true)
+          window.sessionStorage.setItem('sessionUserId', account.username);
+          console.log(window.sessionStorage.getItem('sessionUserId'));
           setTimeout(function(){
             navigate('/');
           },3000);

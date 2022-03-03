@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Dialog, Button, CardContent, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
-import {AuthContext, STATUS} from './AuthContext';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 import axios from 'axios';
@@ -58,12 +57,11 @@ function Borrow(){
         borrow();
     };
     
-    const authContext = useContext(AuthContext);
-    // console.log(authContext.loginemail)
+    const login = window.sessionStorage.getItem('sessionUserId')
     
     async function borrow(){
         try{
-          passdata.email = authContext.loginemail;
+          passdata.email = login;
           const res = await axios.post("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetInsertRecord", passdata);
 
           if (res) {
@@ -125,11 +123,12 @@ function Borrow(){
           
     useEffect(() => {
         function isLogin(){
-            if(authContext.status === STATUS.toSignIn){
+        const login = window.sessionStorage.getItem('sessionUserId')
+            if(login === "null"){
                 setislogin(true)
                 setTimeout(function(){
                     navigate('/');
-                },3000);
+                },2000);
             }
         };
         isLogin();

@@ -9,6 +9,7 @@ import Signup from './register';
 import Borrow from './borrow';
 import Member from './member';
 import Return from './return';
+import Lexbot from './lextest';
 
 function App() {
   const [status, setStatus] = useState(STATUS.toSignIn);
@@ -34,6 +35,7 @@ function App() {
             <Route path="/borrow" element={<Borrow/>}/>
             <Route path="/member" element={<Member/>}/>
             <Route path="/return" element={<Return/>}/>
+            <Route path="/test" element={<Lexbot/>}/>
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>

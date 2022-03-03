@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, Button, InputLabel, MenuItem, FormControl, Select, Grid } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useNavigate, Link } from "react-router-dom";
-import {AuthContext, STATUS} from './AuthContext';
 
 import axios from 'axios';
 
@@ -15,7 +14,6 @@ import Footer from './footer';
 function Return(){
     
     const navigate = useNavigate();
-    const authContext = useContext(AuthContext);
     
     const [location, setLocation] = useState("台北車站大廳")
 
@@ -70,7 +68,8 @@ function Return(){
             navigate('/');
         },5000);
       };
-
+    const login = window.sessionStorage.getItem('sessionUserId')
+    
     function Cfmreturn(data){
         
         return(
@@ -116,17 +115,20 @@ function Return(){
 
     useEffect(() => {
         function isLogin(){
-            if(authContext.status === STATUS.toSignIn){
+            const login = window.sessionStorage.getItem('sessionUserId')
+            if(login === "null"){
                 setislogin(true)
                 setTimeout(function(){
                     navigate('/');
                 },2000);
             }
         };
+        
+        
         async function getRecord() {
     
             try {
-              const res = await axios.get("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetAllRecord/"+authContext.loginemail);
+              const res = await axios.get("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetAllRecord/"+login);
         
               if (res) {
                   

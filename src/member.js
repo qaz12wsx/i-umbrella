@@ -1,7 +1,7 @@
 import './all.css';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -9,7 +9,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Input from '@mui/material/Input';
 import { Card, CardContent } from '@mui/material';
-import {AuthContext, STATUS} from './AuthContext';
 import { useNavigate } from "react-router-dom";
 
 import Snackbar from '@mui/material/Snackbar';
@@ -34,7 +33,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 function Member_index() {
-    const authContext = useContext(AuthContext);
     const navigate = useNavigate();
     
     const [success, setSuccess] = useState(false);
@@ -50,6 +48,7 @@ function Member_index() {
     });
     
     const [MemberEdit, setMemberEdit] = useState(false);
+    const login = window.sessionStorage.getItem('sessionUserId')
     
     const handleSuccessClose = () => {
         setSuccess(false);
@@ -61,7 +60,8 @@ function Member_index() {
     
     useEffect(() => {
       function isLogin(){
-            if(authContext.status === STATUS.toSignIn){
+        const login = window.sessionStorage.getItem('sessionUserId')
+            if(login === "null"){
                 setislogin(true)
                 setTimeout(function(){
                     navigate('/');
@@ -69,7 +69,8 @@ function Member_index() {
             }
         };
       async function fetchData () {
-        const result = await axios.get("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetUser/"+authContext.loginemail);
+        const login = window.sessionStorage.getItem('sessionUserId')
+        const result = await axios.get("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetUser/"+login);
         setCustomer(result.data)
         setislogind(true)
       }
@@ -211,13 +212,13 @@ export default Member_index;
 
 
 function MemberHistory(){
-    const authContext = useContext(AuthContext);
-    
+
+    const login = window.sessionStorage.getItem('sessionUserId')
     const [record, serRecord] = useState([])
 
     record.sort(function(a, b) {
         // boolean false == 0; true == 1
-        return a.record_id.S < b.record_id.S;
+        return parseInt(a.record_id.S) < parseInt(b.record_id.S);
     });
 
     const handleClick = function (record) {
@@ -226,8 +227,11 @@ function MemberHistory(){
     useEffect(() => {
       async function fetchData () {
         
-        const result = await axios.get("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetAllRecord/"+authContext.loginemail);
-
+        const result = await axios.get("https://3m48pa2nyk.execute-api.us-west-2.amazonaws.com/GetAllRecord/"+login);
+        result.data.sort(function(a, b) {
+        // boolean false == 0; true == 1
+        return parseInt(a.record_id.S) < parseInt(b.record_id.S);
+        });
         serRecord(result.data)
       }
       fetchData();

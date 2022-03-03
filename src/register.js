@@ -27,7 +27,7 @@ export default function Signup(){
   // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
+  console.log('read out sessionStorage: sessionUserId=', window.sessionStorage.getItem('sessionUserId'));
   const handleClose = () => {
     setOpen(false);
   };

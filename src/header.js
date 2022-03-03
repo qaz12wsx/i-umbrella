@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -22,7 +22,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import UmbrellaIcon from '@mui/icons-material/Umbrella';
 import Collapse from '@mui/material/Collapse';
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
-import {AuthContext, STATUS} from './AuthContext';
 import Logo from "./hello.png";
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -76,7 +75,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
-  const authContext = useContext(AuthContext);
   
   const navigate = useNavigate();
   
@@ -93,6 +91,8 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
   
+  const login = window.sessionStorage.getItem('sessionUserId');
+  console.log(login)
   const [menuopen, setmenuOpen] = useState(false);
   const [sidemenuopen, setsidemenuOpen] = useState(false);
 
@@ -104,11 +104,10 @@ export default function PersistentDrawerLeft() {
   };
 
   function logout(){
-    authContext.setStatus(STATUS.toSignIn);
-    authContext.setLoginemail("null");
+    window.sessionStorage.setItem('sessionUserId', "null");
      setTimeout(function(){
       navigate('/');
-    },6000);
+    });
   }
 
   return (
@@ -141,7 +140,7 @@ export default function PersistentDrawerLeft() {
                   <li><Link to="/return">我要還傘</Link></li>
                 </ul>
             </Collapse></li>
-              {authContext.status > STATUS.toSignIn ? (<li className="logoutbtn" onClick={logout}>登出</li>):(<li><Link to="/login">登入</Link></li>)}
+              { login === "null" || login === null ? (<li><Link to="/login">登入</Link></li>):(<li className="logoutbtn" onClick={logout}>登出</li>)}
             </ul>
         </Toolbar>
       </AppBar>
