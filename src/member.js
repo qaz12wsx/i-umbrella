@@ -10,7 +10,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Input from '@mui/material/Input';
 import { Card, CardContent } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-
+import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
@@ -95,7 +95,9 @@ function Member_index() {
             <h3>所有租借紀錄</h3>
             <MemberHistory />
           </div>
-        ):("")}
+        ):(<div className="loading">
+                <CircularProgress />
+            </div>)}
       
       <Footer/>
     </div>

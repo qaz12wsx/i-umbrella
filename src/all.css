@@ -392,3 +392,8 @@
 .NoReturn{
     margin: 200px 0;
 }
+.loading{
+    margin: 200px 0;
+    display: flex;
+    justify-content: center;
+}

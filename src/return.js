@@ -3,6 +3,7 @@ import { Dialog, Button, InputLabel, MenuItem, FormControl, Select, Grid } from 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useNavigate, Link } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
 
@@ -23,6 +24,7 @@ function Return(){
     const [isborrow, setIsborrow] = useState(false);
     
     const [islogin, setislogin] = useState(false);
+    const [isload, setisload] = useState(false);
 
     const [returndata, setRreturndata] = useState([{
         record_id: "R3",
@@ -145,6 +147,7 @@ function Return(){
             } catch (error) {
             //   console.log(error);
             }
+            setisload(true)
           };
         isLogin();
         getRecord();
@@ -153,6 +156,8 @@ function Return(){
     return(
         <div>
         <Header/>
+        {isload ? (
+        <div>
             { isborrow ? (<div className='borrow'>
                 <div className='stepone'>
                     <div className="returntitle">
@@ -214,6 +219,12 @@ function Return(){
                   <Button color="primary" variant="contained" >前往租傘</Button>
                 </Link>
               </div>
+            )}
+            </div>
+            ):(
+            <div className="loading">
+                <CircularProgress />
+            </div>
             )}
             
         <Footer/>

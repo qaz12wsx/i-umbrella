@@ -150,6 +150,7 @@ class LexChat extends React.Component {
                 <div className='initconversation'>
                   <Button variant="outlined" value='weather' onClick={this.handleChange.bind(this)}>天氣</Button>
                   <Button variant="outlined" value='borrow or return' onClick={this.handleChange.bind(this)}>我要借/還傘</Button>
+                  <Button variant="outlined" value='pricing' onClick={this.handleChange.bind(this)}>價錢</Button>
                   <Button variant="outlined" value='situation' onClick={this.handleChange.bind(this)}>問題回報</Button>
                 </div>
                 <input type="text"

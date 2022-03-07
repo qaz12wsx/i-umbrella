@@ -100,8 +100,9 @@ function Borrow(){
         
               if (res) {
                 const list = res.data.Items.sort(function(a, b) {
-                    return parseInt(a.umbrella_id.N) > parseInt(b.umbrella_id.N);
+                    return parseInt(a.umbrella_id.N) < parseInt(b.umbrella_id.N);
                 });
+                console.log(list)
                 if(umtype === "所有種類"){
                     setProduct(list)
                 }else if(umtype === "摺疊傘"){
@@ -163,7 +164,7 @@ function Borrow(){
                             </Select>
                         </FormControl>
                         <FormControl sx={{ minWidth: 200, marginLeft: '55px' }}>
-                            <InputLabel id="chooseumtype">租借地點</InputLabel>
+                            <InputLabel id="chooseumtype">雨傘種類</InputLabel>
                             <Select
                             labelId="chooseumtype"
                             id="chooseumtype"
